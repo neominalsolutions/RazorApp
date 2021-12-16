@@ -1,0 +1,46 @@
+﻿@page
+@model RazorApp.Pages.ProductListModel
+@{
+}
+
+
+
+<ul id="plist">
+
+</ul>
+
+
+@section Scripts {
+
+
+<script>
+
+
+    fetch('/ProductList?handler=Json')
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+
+             const plist = document.getElementById("plist");
+            let html = '';
+
+
+            for (const item of data) {
+                html += `<li>Ürün: ${item?.name} - Fiyat: ${item?.price} - Stok: ${item?.stock}</li>`
+            }
+
+           
+
+             plist.innerHTML = html;
+             console.log('data', data)
+         })
+        .catch(function (err) {
+            console.log('err', err);
+        })
+
+</script>
+
+   
+
+
+
+}

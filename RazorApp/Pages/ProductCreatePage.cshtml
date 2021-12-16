@@ -1,0 +1,81 @@
+﻿@page 
+@model RazorApp.Pages.ProductCreatePageModel
+@{
+}
+
+<form  method="post" name="ProductForm" onsubmit="onFormSubmit(event)" >
+    <input type="text" name="Name" placeholder="Urun Adı" />
+    <br />
+    <input type="number" name="Price" placeholder="Fiyatı" />
+    <br />
+    <input type="number" name="Stock" placeholder="Stok Miktarı" />
+    <br />
+    <input type="submit" value="Kaydet" />
+</form>
+
+
+@section Scripts {
+
+    <script>
+
+        function onFormSubmit(event) {
+            console.log('event', event);
+            event.preventDefault();
+
+            let param = {
+                name: ProductForm.Name.value,
+                price: ProductForm.Price.value,
+                stock: ProductForm.Stock.value
+            };
+
+            console.log('param', param);
+
+            console.log('param2', JSON.stringify(param));
+
+
+            //fetch('/ProductCreatePage2',
+            //    {
+            //        method: 'POST',
+            //        body: JSON.stringify(param),
+            //        headers: {
+            //            'Content-Type': 'application/json',
+            //            'Accept': 'application/json',
+            //            RequestVerificationToken:
+            //                $('input:hidden[name="__RequestVerificationToken"]').val()
+            //        }
+            //    })
+            //    .then(function (res) { return res.json(); })
+            //    .then(function (data) { console.log('result', data) })
+            //    .catch(function (err) {
+            //        console.log('err', err);
+            //    })
+
+            $.ajax({
+                url: '/ProductCreatePage',
+                type: 'POST',
+                contentType: 'application/json;',
+                data: JSON.stringify(param),
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success:  function(res) {
+                    console.log('res', res)
+                },
+                error: function(err)  {
+                    console.log('err', err)
+                }
+            })
+
+        }
+
+
+
+    </script>
+
+
+}
+
+
+
+
